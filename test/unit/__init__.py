@@ -1,5 +1,5 @@
-from src.urls import config_api_urls
-from src.api import api
+from urls import config_api_urls
+from api import api
 
 
 config_api_urls(api)

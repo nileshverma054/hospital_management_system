@@ -23,10 +23,10 @@ bash startup.sh
   - [x] Configure Flask-RESTful
   - [x] Set up logger
 
-- [ ] Models
-  - [ ] Patient
-  - [ ] Doctor
-  - [ ] Department
+- [x] Models
+  - [x] Patient
+  - [x] Doctor
+  - [x] Department
 
 - [ ] Resources
   - [ ] Patient

@@ -1,5 +1,5 @@
 import unittest
-from src.api import app
+from api import app
 
 
 class TestFactory(unittest.TestCase):

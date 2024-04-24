@@ -1,5 +1,5 @@
 import os
-from src.api import app, db
+from api import app, db
 
 
 def setup_database():

@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, current_app as app
-from src.utils.resource_exceptions import AuthenticationError
+from utils.resource_exceptions import AuthenticationError
 
 
 def authenticate(fn):

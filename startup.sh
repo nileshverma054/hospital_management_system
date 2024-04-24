@@ -4,5 +4,4 @@ set -o allexport
 source "env/development.env"
 set +o allexport
 
-python run.py
-
+python app.py

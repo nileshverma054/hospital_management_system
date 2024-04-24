@@ -2,7 +2,7 @@ from functools import wraps
 from flask import current_app as app, request
 from marshmallow import ValidationError
 import ast
-from src.api import db
+from api import db
 from webargs.flaskparser import parser
 
 

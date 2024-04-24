@@ -1,11 +1,10 @@
 import time
 
+from src.common.constants import APP_NAME
+from src.config import BaseConfig
 from flask import Flask, g, request
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-
-from src.common.constants import APP_NAME
-from src.config import BaseConfig
 from src.utils.logger import config_logger
 
 # Initialize the Flask App
