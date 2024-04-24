@@ -7,6 +7,6 @@ def config_api_urls(api):
     :param api: flask-restful object
     """
     api.add_resource(resources.HealthCheck, "/healthcheck")
-    # api.add_resource(resources.Account, "/departments")
+    api.add_resource(resources.DepartmentResource, "/departments")
     # api.add_resource(resources.AccountDetails, "/doctors")
     # api.add_resource(resources.AccountDetails, "/patients")

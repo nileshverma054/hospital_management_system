@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e7ea1ed38a7f
+Revision ID: 9acfc200d5fb
 Revises: 
-Create Date: 2024-04-25 00:27:37.910355
+Create Date: 2024-04-25 00:56:49.980783
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e7ea1ed38a7f'
+revision = '9acfc200d5fb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,14 +22,18 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=True),
     sa.Column('services_offered', sa.Text(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('doctor',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=True),
     sa.Column('specialization', sa.String(length=100), nullable=True),
-    sa.Column('contact_information', sa.String(length=255), nullable=True),
+    sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('availability_schedule', sa.String(length=255), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('patient',
@@ -37,8 +41,10 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=True),
     sa.Column('date_of_birth', sa.Date(), nullable=True),
     sa.Column('gender', sa.String(length=10), nullable=True),
-    sa.Column('contact_information', sa.String(length=255), nullable=True),
+    sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('medical_history', sa.Text(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('appointment',
@@ -46,6 +52,8 @@ def upgrade():
     sa.Column('patient_id', sa.Integer(), nullable=False),
     sa.Column('doctor_id', sa.Integer(), nullable=False),
     sa.Column('date_time', sa.DateTime(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['doctor_id'], ['doctor.id'], ),
     sa.ForeignKeyConstraint(['patient_id'], ['patient.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -48,4 +48,8 @@ bash startup.sh
 
 
 - [ ] Documentation
-  - [ ] Swagger UI
+  - [ ] Postman
+
+- [ ] Create internal python library
+  - [ ] utils library
+    

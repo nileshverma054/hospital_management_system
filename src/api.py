@@ -32,7 +32,10 @@ def before_request():
 def after_request(response):
     response.headers["X-Request-Id"] = getattr(g, "request_id", "")
     diff = f"{(time.time() - g.request_start_time):2.4f}s"
+    path = request.path
+    if request.query_string.decode("utf-8"):
+        path += "?" + request.query_string.decode("utf-8")
     app.logger.debug(
-        f"{request.method} {request.path} {response.status} " f"| Time taken: {diff}"
+        f"{request.method} {path} {response.status} " f"| Time taken: {diff}"
     )
     return response

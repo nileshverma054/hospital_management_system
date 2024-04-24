@@ -68,7 +68,7 @@ def config_logger(app):
         },
         formatters={
             "console": {
-                "format": "%(request_id)s - %(asctime)s - %(levelname)s - %(message)s"
+                "format": "%(request_id)s - %(asctime)s - %(levelname)s - %(filename)s:%(lineno)s -  %(message)s"
             }
         },
         handlers={
