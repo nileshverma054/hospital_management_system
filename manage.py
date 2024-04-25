@@ -3,12 +3,7 @@ from sqlalchemy import create_engine, text
 
 from src.api import app, db
 from flask_migrate import Migrate
-from src.models.models import (
-    Appointment,
-    Department,
-    Doctor,
-    Patient,
-)
+from src.models.models import *
 
 db.init_app(app)
 migrate = Migrate(app, db)

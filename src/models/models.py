@@ -87,17 +87,53 @@ class Doctor(BaseModel):
 
 class Department(BaseModel):
     name = db.Column(db.String(100))
-    services_offered = db.Column(db.Text)
+    services = db.relationship("DepartmentService", backref="department", lazy=True)
 
     def __repr__(self):
-        return f"<Department {self.id} {self.name}>"
+        return f"<Department {self.id} {self.name} {self.services}>"
+
+    @classmethod
+    def get_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
 
     def to_json(self):
         """Serialize the object to a JSON-friendly format."""
         return {
             "id": self.id,
             "name": self.name,
-            "services_offered": self.services_offered,
+            "services_offered": self.services,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+
+    def to_json_structured(self):
+        """Serialize the object to a JSON-friendly format."""
+        return {
+            "id": self.id,
+            "name": self.name,
+            "services_offered": [service.service for service in self.services],
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+
+
+class DepartmentService(BaseModel):
+    """Model to store services offered by a department."""
+
+    service = db.Column(db.String(100))
+    department_id = db.Column(
+        db.Integer,
+        db.ForeignKey("department.id", ondelete="CASCADE"),
+    )
+
+    def __repr__(self):
+        return f"<DepartmentService {self.department_id} {self.service}>"
+
+    def to_json(self):
+        """Serialize the object to a JSON-friendly format."""
+        return {
+            "department_id": self.department_id,
+            "service": self.service,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
         }
