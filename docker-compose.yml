@@ -1,0 +1,29 @@
+services:
+  hospital_management_system:
+    image: hospital_management_system
+    container_name: hospital_management_system
+    command: "python app.py"
+    volumes: # this will allow hot-reload in docker container when any change is detected in src folder
+      - ./src:/app/src
+    environment:
+      LOG_LEVEL: DEBUG
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - env/development.env
+    networks:
+      - mysql_network
+    ports:
+      - "5080:5080"
+    deploy:
+      resources: # limit resources to be used
+        limits:
+          cpus: '0.2'
+          memory: '512M'
+
+networks:
+  mysql_network:
+    name: mysql_default
+    external: true
+
