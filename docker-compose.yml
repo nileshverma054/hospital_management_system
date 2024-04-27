@@ -1,29 +1,43 @@
 services:
   hospital_management_system:
     image: hospital_management_system
-    container_name: hospital_management_system
+    container_name: hospital_management_system_container
     command: "python app.py"
+    # command: "bash docker-entrypoint.sh"
     volumes: # this will allow hot-reload in docker container when any change is detected in src folder
       - ./src:/app/src
     environment:
       LOG_LEVEL: DEBUG
+      DATABASE_URI: mysql://root:root@hospital_management_system_mysql
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
       - env/development.env
-    networks:
-      - mysql_network
     ports:
       - "5080:5080"
+    depends_on:
+      - "mysql"
     deploy:
       resources: # limit resources to be used
         limits:
           cpus: '0.2'
           memory: '512M'
 
-networks:
-  mysql_network:
-    name: mysql_default
-    external: true
-
+  mysql:
+    image: mysql:latest
+    container_name: hospital_management_system_mysql
+    environment:
+      MYSQL_DATABASE: hospital_management
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    expose:
+      - "3307"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: '512M'

@@ -31,6 +31,7 @@ RUN useradd -ms /bin/bash myuser && \
 
 # Installing packages and changing ownership of directories to 'myuser'
 RUN apt-get update && apt-get install libmariadb3 -y && \
+    apt-get install -y nmap && \
     rm -rf /var/lib/apt/lists/* && \
     chown -R myuser:myuser ${APPLICATION_LOG_PATH}
 

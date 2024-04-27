@@ -40,3 +40,4 @@ tests
 env/
 # keep for local development
 !env/development.env
+mysql_data
