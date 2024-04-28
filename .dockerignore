@@ -34,7 +34,6 @@ logs
 docs
 bin
 logs
-migrations
 run_test.py
 tests
 env/

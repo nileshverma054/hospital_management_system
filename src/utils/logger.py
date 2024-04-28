@@ -90,4 +90,4 @@ def config_logger(app):
 
     logging.config.dictConfig(log_config)
     app.logger = logging.getLogger("console")
-    app.logger.info("logger configured successfully.")
+    app.logger.info("logger configured successfully")

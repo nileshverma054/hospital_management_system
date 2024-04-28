@@ -11,3 +11,4 @@ class BaseConfig(object):
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
     PORT = int(os.environ.get("PORT", 5080))
     TEST_DATABASE_URI = os.environ.get("TEST_DATABASE_URI")
+    SETUP_DATABASE = os.environ.get("SETUP_DATABASE") == "True"

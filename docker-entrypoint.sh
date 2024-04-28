@@ -2,12 +2,15 @@
 
 set -e
 
-# Wait for the database to be available
-until nmap hospital_management_system_mysql --send-eth --max-retries 10
-do
-  echo "Waiting for database connection..."
-  sleep 3
-done
+# This will wait unintil database is ready
+python manage.py
 
-# Run the app
+echo "DB_MIGRATIONS is ${DB_MIGRATIONS}"
+# Run database migrations only if DB_MIGRATIONS is set to True
+if [[ "${DB_MIGRATIONS}" == "true" ]]; then
+    echo "Running database migrations.."
+    flask db upgrade
+fi
+
+# Run application
 python app.py

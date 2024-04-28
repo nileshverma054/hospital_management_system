@@ -21,9 +21,13 @@ Use the below link to view API documentation
 
 ### Running the application with Docker Compose 🐳
 To run the application locally, you will need to have Docker and Docker Compose installed on your machine.
-Once you have Docker and Docker Compose installed, you can use the following command to start the application:
+Once you have Docker and Docker Compose installed, you can use the following commands to start the application:
+
 ```
-docker compose up
+docker-compose build
+```
+```
+docker-compose up
 ```
 
 ##### Or - unfortunaltely if you do not have docker then you can setup manually using below steps
