@@ -2,15 +2,22 @@
 A RESTful API for a Hospital Management System using Python Flask framework that allows users to manage patients, doctors, and departments efficiently.
 
 
-### Tech Stack
-- Python 3.12.1
-- Flask 3.0.3
-- Flask-Restful
-- SQLAlchemy
-- MySQL
+### Project Details
+- Tech Stack
+  - Python 3.12
+  - Flask 3.0
+  - SQLAlchemy ORM
+- Support for Docker
+  - Easy project setup using Docker and Docker compose
+- Database Migrations
+  - Self managed database migrations using alembic for local setup
+- API Documentation
+  - Useful API documentaion with API request and response examples via Postman.
+- Restful Resources
+  - Uses Flask-Restful to easily manage API resources
 
 
-## API Document
+## API Documentation
 Use the below link to view API documentation
 [Postman API Documentation](https://documenter.getpostman.com/view/15731252/2sA3Bt1UqN) 🔥
 
