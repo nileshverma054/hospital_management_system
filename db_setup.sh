@@ -1,17 +1,15 @@
 #!bin/bash
 
-# This script will setup database
-
 set -o allexport
 source "env/development.env"
 set +o allexport
 
-export FLASK_APP="manage.py"
-
-python manage.py
-
-flask db init
-
-flask db migrate -m "initial migration"
+python manage.py -db True
 
 flask db upgrade
+
+# use following commands for create migrations
+
+# bash run_with_env.sh env/development.env flask db init
+# bash run_with_env.sh env/development.env flask db migrate -m "intial"
+# bash run_with_env.sh env/development.env flask db upgrade

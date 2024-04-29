@@ -1,6 +1,6 @@
 import unittest
 import logging
-from test.unit.test_database_setup import setup_database, teardown_database
+from tests.unit.test_database_setup import setup_database, teardown_database
 
 
 if __name__ == '__main__':

@@ -12,15 +12,30 @@ A RESTful API for a Hospital Management System using Python Flask framework that
 
 ## API Document
 Use the below link to view API documentation
-[Postman API Documentation 🔥](https://documenter.getpostman.com/view/15731252/2sA3Bt1UqN)
+[Postman API Documentation](https://documenter.getpostman.com/view/15731252/2sA3Bt1UqN) 🔥
 
 ## Project Setup
-###### Requirements
-- Mysql
-- Python 3.12
 ###### Steps
 - Clone Repostory
 - cd to project folder
+
+### Running the application with Docker Compose 🐳
+To run the application locally, you will need to have Docker and Docker Compose installed on your machine.
+Once you have Docker and Docker Compose installed, you can use the following commands to start the application:
+
+```
+docker-compose build
+```
+```
+docker-compose up
+```
+
+##### Or - unfortunaltely if you do not have docker then you can setup manually using below steps
+###### Requirements
+- Mysql
+- Python 3.12
+
+###### Steps
 - Create virtual environment
 ```
 python3.12 -m venv .venv
@@ -53,6 +68,10 @@ bash startup.sh
   - [x] Doctor
   - [x] Department
 
+- [x] Containerise App
+  - [x] Set up Dockerfile
+  - [x] Set up Docker-Compose
+
 
 - [ ] Routes
   - [x] Department
@@ -64,18 +83,12 @@ bash startup.sh
   - [ ] Patient
   - [ ] Doctor
 
-
 - [x] Documentation
   - [x] Postman
 
 - [ ] Tests
   - [x] Unit tests
   - [ ] Integration tests
-
-- [ ] CI/CD
-  - [ ] Set up Dockerfile
-  - [ ] Set up Docker-Compose
-
 
 - [ ] Create internal python library
   - [ ] utils library

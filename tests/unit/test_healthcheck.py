@@ -1,4 +1,4 @@
-from test.unit.test_factory import TestFactory
+from tests.unit.test_factory import TestFactory
 
 
 class TestHealthcheck(TestFactory):
