@@ -1,5 +1,6 @@
 import datetime
-
+from sqlalchemy import JSON
+from sqlalchemy.orm import validates
 from src.api import db
 
 
@@ -62,9 +63,9 @@ class Patient(BaseModel):
 
 class Doctor(BaseModel):
     name = db.Column(db.String(100))
-    specialization = db.Column(db.String(100))
     email = db.Column(db.String(255))
-    availability_schedule = db.Column(db.String(255))
+    specialization = db.Column(db.String(100))
+    availability_schedule = db.Column(JSON)
     assigned_patients = db.relationship(
         "Patient", secondary="doctor_patient", backref="doctors", lazy=True
     )
@@ -77,8 +78,8 @@ class Doctor(BaseModel):
         return {
             "id": self.id,
             "name": self.name,
-            "specialization": self.specialization,
             "email": self.email,
+            "specialization": self.specialization,
             "availability_schedule": self.availability_schedule,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
