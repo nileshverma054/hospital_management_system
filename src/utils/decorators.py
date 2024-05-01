@@ -1,17 +1,14 @@
-import ast
 from functools import wraps
 
 from flask import current_app as app
 from flask import request
-from marshmallow import ValidationError
+from werkzeug.exceptions import UnprocessableEntity
+
+from src.api import db
 from src.utils.resource_exceptions import (
     AuthenticationError,
     ResourceNotFoundError,
 )
-from webargs.flaskparser import parser
-from werkzeug.exceptions import UnprocessableEntity
-
-from src.api import db
 
 
 def authenticate(fn):
@@ -54,9 +51,23 @@ def handle_exceptions(fn):
             try:
                 if not status:
                     db.session.rollback()
+                    app.logger.debug("Databse session rolled back")
             except Exception as e:
                 app.logger.exception(
                     f"UnknownException while completing db session: {e}"
                 )
+
+    return wrapper
+
+
+def function_logger(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        app.logger.debug(
+            f"function {fn.__name__} called with args: {args}, kwargs: {kwargs}"
+        )
+        result = fn(*args, **kwargs)
+        app.logger.debug(f"function {fn.__name__} returned: {result}")
+        return result
 
     return wrapper

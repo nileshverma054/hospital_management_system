@@ -9,6 +9,7 @@ from src.common.constants import DayOfWeek, DoctorSpecialization
 from src.models.models import Doctor
 from src.utils.decorators import handle_exceptions
 from src.utils.resource_exceptions import ResourceNotFoundError
+from src.functionality.doctors import CreateDoctorService
 
 
 class AvailabilityScheduleSchema(Schema):
@@ -38,4 +39,7 @@ class DoctorResource(Resource):
     @use_kwargs(DoctorCreateSchema)
     def post(self, **kwargs):
         app.logger.debug(f"{self.__class__.__name__}.post: {kwargs}")
-        return {}, 201
+        record_id = CreateDoctorService(**kwargs).create()
+        if record_id:
+            db.session.commit()
+        return {"id": record_id}, 201
