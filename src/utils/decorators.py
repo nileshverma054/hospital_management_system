@@ -9,6 +9,7 @@ from src.utils.resource_exceptions import (
     ResourceNotFoundError,
 )
 from webargs.flaskparser import parser
+from werkzeug.exceptions import UnprocessableEntity
 
 from src.api import db
 
@@ -34,9 +35,10 @@ def handle_exceptions(fn):
             return res, status_code
         except AuthenticationError as e:
             return {"message": str(e)}, 401
-        except ValidationError as e:
-            app.logger.error(f"ValidationError: {e}")
-            error = ast.literal_eval(str(e))
+        except UnprocessableEntity as e:
+            app.logger.error(f"UnprocessableEntity: {e.__dict__}")
+            error_msg = e.data.get("messages").get("json")
+            error = {"error": error_msg}
             return {"message": error}, 422
         except ValueError as e:
             app.logger.error(f"API ValueError: {e}")
@@ -58,8 +60,3 @@ def handle_exceptions(fn):
                 )
 
     return wrapper
-
-
-@parser.error_handler
-def handle_error(error, req, schema, *, error_status_code, error_headers):
-    raise ValidationError(error)

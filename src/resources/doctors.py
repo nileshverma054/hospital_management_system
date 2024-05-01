@@ -1,6 +1,6 @@
 from flask import current_app as app
 from flask_restful import Resource
-from marshmallow import Schema
+from marshmallow import Schema, validate
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 
@@ -12,10 +12,9 @@ from src.utils.resource_exceptions import ResourceNotFoundError
 
 
 class AvailabilityScheduleSchema(Schema):
-    day = fields.Enum(enum=DayOfWeek, required=True)
-    start = fields.Time(required=True)
-    end = fields.Time(required=True)
-    capacity = fields.Int(required=True)
+    start = fields.Time(format="%H:%M")
+    end = fields.Time(format="%H:%M")
+    capacity = fields.Int()
 
 
 class DoctorCreateSchema(Schema):
@@ -23,7 +22,11 @@ class DoctorCreateSchema(Schema):
     email = fields.Email(required=True)
     department_id = fields.Int(required=True)
     specialization = fields.Enum(enum=DoctorSpecialization, required=True)
-    availability_schedule = fields.Nested(AvailabilityScheduleSchema, many=True)
+    availability_schedule = fields.Dict(
+        keys=fields.Str(validate=validate.OneOf([day.value for day in DayOfWeek])),
+        values=fields.Nested(AvailabilityScheduleSchema),
+        required=True,
+    )
 
     class Meta:
         # this attribute will raise error if user sends extra fields
