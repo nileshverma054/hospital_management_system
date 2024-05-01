@@ -1,11 +1,12 @@
 import datetime
-
+from sqlalchemy import JSON
+from sqlalchemy.orm import validates
 from src.api import db
 
 
 class BaseModel(db.Model):
     __abstract__ = True
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, sort_order=1)
     created_at = db.Column(
         db.DateTime,
         default=datetime.datetime.now(datetime.UTC),
@@ -62,9 +63,9 @@ class Patient(BaseModel):
 
 class Doctor(BaseModel):
     name = db.Column(db.String(100))
-    specialization = db.Column(db.String(100))
     email = db.Column(db.String(255))
-    availability_schedule = db.Column(db.String(255))
+    specialization = db.Column(db.String(100))
+    availability_schedule = db.Column(JSON)
     assigned_patients = db.relationship(
         "Patient", secondary="doctor_patient", backref="doctors", lazy=True
     )
@@ -72,13 +73,16 @@ class Doctor(BaseModel):
         "Department", secondary="doctor_department", backref="doctors", lazy=True
     )
 
+    def __repr__(self):
+        return f"<Doctor {self.id} {self.name} {self.email}>"
+
     def to_json(self):
         """Serialize the object to a JSON-friendly format."""
         return {
             "id": self.id,
             "name": self.name,
-            "specialization": self.specialization,
             "email": self.email,
+            "specialization": self.specialization,
             "availability_schedule": self.availability_schedule,
             "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
@@ -139,19 +143,41 @@ class DepartmentService(BaseModel):
         }
 
 
-doctor_patient = db.Table(
-    "doctor_patient",
-    db.Column("doctor_id", db.Integer, db.ForeignKey("doctor.id"), primary_key=True),
-    db.Column("patient_id", db.Integer, db.ForeignKey("patient.id"), primary_key=True),
-)
+class DoctorPatient(BaseModel):
+    """Model to store association between doctor and patient."""
 
-doctor_department = db.Table(
-    "doctor_department",
-    db.Column("doctor_id", db.Integer, db.ForeignKey("doctor.id"), primary_key=True),
-    db.Column(
-        "department_id", db.Integer, db.ForeignKey("department.id"), primary_key=True
-    ),
-)
+    doctor_id = db.Column(db.Integer, db.ForeignKey("doctor.id"))
+    patient_id = db.Column(db.Integer, db.ForeignKey("patient.id"))
+
+    def to_json(self):
+        """Serialize the object to a JSON-friendly format."""
+        return {
+            "doctor_id": self.doctor_id,
+            "patient_id": self.patient_id,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+
+
+class DoctorDepartment(BaseModel):
+    """Model to store association between doctor and department."""
+
+    doctor_id = db.Column(db.Integer, db.ForeignKey("doctor.id"))
+    department_id = db.Column(
+        db.Integer, db.ForeignKey("department.id")
+    )
+
+    def __repr__(self):
+        return f"<DoctorDepartment {self.doctor_id} {self.department_id}>"
+
+    def to_json(self):
+        """Serialize the object to a JSON-friendly format."""
+        return {
+            "doctor_id": self.doctor_id,
+            "department_id": self.department_id,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            "modified_at": self.modified_at.strftime("%Y-%m-%d %H:%M:%S"),
+        }
 
 
 class Appointment(BaseModel):

@@ -21,7 +21,7 @@ services:
     deploy:
       resources: # limit resources to be used
         limits:
-          cpus: '0.2'
+          cpus: '0.5'
           memory: '512M'
 
   mysql:
@@ -35,6 +35,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
+          cpus: '0.5'
           memory: '512M'
 

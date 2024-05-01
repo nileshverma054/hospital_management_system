@@ -60,6 +60,10 @@ bash db_setup.sh
 bash startup.sh
 ```
 
+### Healthcheck API
+```
+curl --location 'http://127.0.0.1:5080/api/v1/healthcheck'
+```
 
 ### TODO
 

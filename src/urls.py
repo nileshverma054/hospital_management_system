@@ -13,10 +13,11 @@ def config_api_urls(api):
         "/departments/<int:department_id>",
         methods=["POST", "GET", "DELETE", "PATCH"],
     )
-    # api.add_resource(
-    #     resources.DepartmentResource,
-    #     "/departments/<int:department_id>",
-    #     methods=["DELETE"],
-    # )
+    api.add_resource(
+        resources.DoctorResource,
+        "/doctors",
+        "/doctors/<int:department_id>",
+        methods=["POST", "GET", "DELETE", "PATCH"],
+    )
     # api.add_resource(resources.AccountDetails, "/doctors")
     # api.add_resource(resources.AccountDetails, "/patients")

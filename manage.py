@@ -30,7 +30,7 @@ def check_database_connection():
             error_message = str(e)
             if "Unknown database" in error_message:
                 create_database()
-            app.logger.error(f"Error while connecting to database: {e}, retrying...")
+            app.logger.error(f"Database is not running yet: {e}, waiting...")
             time.sleep(SLEEP_TIME)
 
     if error_message:
@@ -57,7 +57,7 @@ def check_database_connection_sqlalchemy():
             error_message = str(e)
             if "Unknown database" in error_message:
                 create_database()
-            app.logger.error(f"Error while connecting to database: {e}, retrying...")
+            app.logger.error(f"Database is not running yet: {e}, waiting...")
             time.sleep(SLEEP_TIME)
 
     if error_message:
